@@ -1,0 +1,31 @@
+#docker-compose -f compose.dev.yml --env-file dev.env down dbnosql clientdbnosql
+#docker-compose -f compose.dev.yml --env-file dev.env up -d dbnosql clientdbnosql
+
+version: "3.9"
+services:
+  dbnosql:
+    hostname: ${MONGOHOST}
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODBUSER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGOPASS}
+      MONGO_INITDB_DATABASE: ${MONGODBNAME}
+    ports:
+      - ${MONGOPORT}:27017
+    volumes:
+      - ./mongodb/data/datadir:/data/db
+      - ./mongodb/data/configdb:/data/configdb
+  clientdbnosql:
+    restart: always
+    hostname: clientenosql
+    image: mongo-express
+    ports:
+      - ${MONGODBCLIENTPORT}:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODBUSER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGOPASS}
+      ME_CONFIG_BASICAUTH_USERNAME: ${MONGODBUSER}  
+      ME_CONFIG_BASICAUTH_PASSWORD: ${MONGOPASS}
+      ME_CONFIG_MONGODB_URL: ${MONGODB} 
+ 
