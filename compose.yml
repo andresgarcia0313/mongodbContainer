@@ -1,5 +1,6 @@
-#docker-compose -f compose.dev.yml --env-file dev.env down dbnosql clientdbnosql
-#docker-compose -f compose.dev.yml --env-file dev.env up -d dbnosql clientdbnosql
+#sudo service docker restart
+#docker-compose -f compose.yml down dbnosql clientdbnosql
+#docker-compose -f compose.dev.yml up -d dbnosql clientdbnosql
 
 version: "3.9"
 services:
@@ -27,5 +28,5 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGOPASS}
       ME_CONFIG_BASICAUTH_USERNAME: ${MONGODBUSER}  
       ME_CONFIG_BASICAUTH_PASSWORD: ${MONGOPASS}
-      ME_CONFIG_MONGODB_URL: ${MONGODB} 
+      ME_CONFIG_MONGODB_URL: ${MONGOURL} 
  
